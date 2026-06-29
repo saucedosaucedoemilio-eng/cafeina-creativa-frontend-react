@@ -1,10 +1,9 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import axios from "axios";
 import "./Auth.css";
 
 function Login() {
-  const [formData, setFormData] = useState({ email: "", password: "" });
+  const [formData, setFormData] = useState({ username: "", password: "" });
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
@@ -18,24 +17,25 @@ function Login() {
     e.preventDefault();
     setLoading(true);
 
-    axios
-      .get(`https://cafe-api-backend.onrender.com/usuarios?email=${formData.email}`)
+    fetch("https://cafe-api-backend.onrender.com/login", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        username: formData.username,
+        password: formData.password,
+      }),
+    })
       .then((response) => {
-        const usuario = response.data[0];
-
-        if (!usuario) {
-          setError("No existe una cuenta con ese email.");
+        if (response.status === 401) {
+          setError("Credenciales incorrectas.");
           setLoading(false);
-          return;
+          return null;
         }
-
-        if (usuario.password !== formData.password) {
-          setError("Contraseña incorrecta.");
-          setLoading(false);
-          return;
-        }
-
-        localStorage.setItem("usuario", JSON.stringify(usuario));
+        return response.json();
+      })
+      .then((data) => {
+        if (!data) return;
+        localStorage.setItem("token", data.token);
         navigate("/menu");
       })
       .catch(() => {
@@ -52,13 +52,13 @@ function Login() {
 
         <form className="auth-form" onSubmit={handleSubmit}>
           <div className="auth-field">
-            <label>Email</label>
+            <label>Usuario</label>
             <input
-              type="email"
-              name="email"
-              value={formData.email}
+              type="text"
+              name="username"
+              value={formData.username}
               onChange={handleChange}
-              placeholder="tu@email.com"
+              placeholder="Tu usuario"
               required
             />
           </div>

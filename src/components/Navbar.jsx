@@ -3,14 +3,12 @@ import { Link, useNavigate } from "react-router-dom";
 import "./Navbar.css";
 
 function Navbar() {
-  const [usuario, setUsuario] = useState(() =>
-    JSON.parse(localStorage.getItem("usuario"))
-  );
+  const [token, setToken] = useState(() => localStorage.getItem("token"));
   const navigate = useNavigate();
 
   const handleLogout = () => {
-    localStorage.removeItem("usuario");
-    setUsuario(null);
+    localStorage.removeItem("token");
+    setToken(null);
     navigate("/login");
   };
 
@@ -33,7 +31,7 @@ function Navbar() {
         <ul className="navbar-links">
           <li><Link to="/menu">Menu</Link></li>
           <li><Link to="/create-cafe">Crear café</Link></li>
-          <li><Link to="/edit-cafes">Editar cafés</Link></li>
+          {token && <li><Link to="/edit-cafes">Editar cafés</Link></li>}
         </ul>
 
         <Link to="/" className="navbar-logo">
@@ -46,9 +44,9 @@ function Navbar() {
         </Link>
 
         <div className="navbar-right">
-          {usuario ? (
+          {token ? (
             <div className="navbar-user">
-              <span className="navbar-username">Hola, {usuario.nombre}</span>
+              <span className="navbar-username">Sesión activa</span>
               <button className="navbar-logout" onClick={handleLogout}>Salir</button>
             </div>
           ) : (

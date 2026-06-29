@@ -7,6 +7,7 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
+import ProtectedRoute from './components/ProtectedRoute';
 
 function App() {
   return (
@@ -15,7 +16,7 @@ function App() {
       <Routes>
         <Route path="/menu" element={<Menu />} />
         <Route path="/create-cafe" element={<CreateCafe />} />
-        <Route path="/edit-cafes" element={<EditCafes />} />
+        <Route path="/edit-cafes" element={<ProtectedRoute><EditCafes /></ProtectedRoute>} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
       </Routes>
