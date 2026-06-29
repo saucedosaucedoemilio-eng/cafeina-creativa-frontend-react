@@ -36,7 +36,7 @@ function Login() {
       .then((data) => {
         if (!data) return;
         localStorage.setItem("token", data.token);
-        navigate("/menu");
+        navigate("/edit-cafes");
       })
       .catch(() => {
         setError("Error al conectar con el servidor.");
