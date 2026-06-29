@@ -15,7 +15,7 @@ function Menu() {
   // Al montar el componente, pide los cafés a la API
   useEffect(() => {
     axios
-      .get("http://localhost:5005/cafes")
+      .get("https://cafe-api-backend.onrender.com/cafes")
       .then((response) => {
         setCafes(response.data); // Guarda los cafés en el estado
         setLoading(false);       // Ya no está cargando

@@ -10,7 +10,7 @@ function EditCafes() {
 
   useEffect(() => {
     axios
-      .get("http://localhost:5005/cafes")
+      .get("https://cafe-api-backend.onrender.com/cafes")
       .then((response) => {
         setCafes(response.data);
         setLoading(false);

@@ -19,7 +19,7 @@ function Login() {
     setLoading(true);
 
     axios
-      .get(`http://localhost:5005/usuarios?email=${formData.email}`)
+      .get(`https://cafe-api-backend.onrender.com/usuarios?email=${formData.email}`)
       .then((response) => {
         const usuario = response.data[0];
 

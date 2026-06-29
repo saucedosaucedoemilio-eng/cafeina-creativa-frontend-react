@@ -55,7 +55,7 @@ function CreateCafe() {
 
     // Envía el nuevo café a la API con un POST
     axios
-      .post("http://localhost:5005/cafes", newCafe)
+      .post("https://cafe-api-backend.onrender.com/cafes", newCafe)
       .then(() => {
         setSuccess(true);  // Muestra mensaje de éxito
         setError(null);

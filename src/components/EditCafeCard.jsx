@@ -23,7 +23,7 @@ function EditCafeCard({ cafe, onDelete }) {
   const handleDelete = () => {
     setDeleting(true);
     axios
-      .delete(`http://localhost:5005/cafes/${cafe.id}`)
+      .delete(`https://cafe-api-backend.onrender.com/cafes/${cafe.id}`)
       .then(() => {
         onDelete(cafe.id);
       })
@@ -45,7 +45,7 @@ function EditCafeCard({ cafe, onDelete }) {
     };
 
     axios
-      .put(`http://localhost:5005/cafes/${cafe.id}`, updatedCafe)
+      .put(`https://cafe-api-backend.onrender.com/cafes/${cafe.id}`, updatedCafe)
       .then(() => {
         setSuccess(true);
         setError(null);

@@ -31,7 +31,7 @@ function Register() {
 
     // Comprueba que el email no esté ya registrado
     axios
-      .get(`http://localhost:5005/usuarios?email=${formData.email}`)
+      .get(`https://cafe-api-backend.onrender.com/usuarios?email=${formData.email}`)
       .then((response) => {
         if (response.data.length > 0) {
           setError("Ya existe una cuenta con ese email.");
@@ -45,7 +45,7 @@ function Register() {
           password: formData.password,
         };
 
-        return axios.post("http://localhost:5005/usuarios", nuevoUsuario);
+        return axios.post("https://cafe-api-backend.onrender.com/usuarios", nuevoUsuario);
       })
       .then((response) => {
         if (!response) return;
