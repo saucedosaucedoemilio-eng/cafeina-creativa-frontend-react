@@ -51,8 +51,7 @@ function Navbar() {
             </div>
           ) : (
             <div className="navbar-auth">
-              <Link to="/login" className="navbar-login">Iniciar sesión</Link>
-              <Link to="/register" className="navbar-cta">Registrarse</Link>
+              <Link to="/login" className="navbar-cta">Iniciar sesión</Link>
             </div>
           )}
         </div>
