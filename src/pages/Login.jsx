@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import "./Auth.css";
 
 function Login() {
@@ -82,10 +82,6 @@ function Login() {
           </button>
         </form>
 
-        <p className="auth-switch">
-          ¿No tienes cuenta?{" "}
-          <Link to="/register" className="auth-link">Regístrate</Link>
-        </p>
       </div>
     </div>
   );
