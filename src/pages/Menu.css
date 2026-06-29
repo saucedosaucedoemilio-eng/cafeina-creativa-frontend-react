@@ -1,0 +1,141 @@
+.menu-page {
+  background-color: #f5efe6;
+  min-height: 100vh;
+  padding: 40px 32px;
+  box-sizing: border-box;
+}
+
+/* Filtros de categoría */
+.menu-filters {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 40px;
+  flex-wrap: wrap;
+}
+
+.filter-btn {
+  padding: 10px 20px;
+  border-radius: 999px;
+  border: none;
+  background: #ede3d8;
+  color: #5a3e2b;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+}
+
+.filter-btn.active {
+  background: #3b1f0e;
+  color: #f5efe6;
+}
+
+.filter-btn:hover:not(.active) {
+  background: #e0d4c4;
+}
+
+/* Grid de tarjetas */
+.cafes-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+
+@media (max-width: 900px) {
+  .cafes-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .cafes-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Tarjeta individual */
+.cafe-card {
+  background: #f5efe6;
+  border-radius: 20px;
+  padding: 24px 24px 20px;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  box-shadow: 0 4px 20px rgba(44, 26, 14, 0.07);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.cafe-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 32px rgba(44, 26, 14, 0.13);
+}
+
+.cafe-card-rating {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  font-size: 15px;
+  font-weight: 700;
+  color: #c8522a;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.cafe-card-rating .star {
+  color: #c8522a;
+  font-size: 15px;
+}
+
+.cafe-card img {
+  width: 75%;
+  height: 260px;
+  object-fit: contain;
+  margin: 16px auto 24px;
+  display: block;
+}
+
+.cafe-card-title {
+  font-size: 16px;
+  font-weight: 900;
+  text-transform: uppercase;
+  color: #2c1a0e;
+  letter-spacing: 1px;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.cafe-card-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: auto;
+  border-top: 1px solid #e4d8cc;
+  padding-top: 16px;
+}
+
+.cafe-card-price {
+  font-size: 18px;
+  font-weight: 800;
+  color: #2c1a0e;
+}
+
+.cafe-card-cta {
+  font-size: 12px;
+  font-weight: 700;
+  color: #c8522a;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  cursor: pointer;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  transition: gap 0.2s;
+}
+
+.cafe-card-cta:hover {
+  gap: 8px;
+}

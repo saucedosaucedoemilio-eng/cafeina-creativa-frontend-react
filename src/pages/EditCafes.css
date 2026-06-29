@@ -1,0 +1,178 @@
+.edit-page {
+  background-color: #f5efe6;
+  min-height: 100vh;
+  padding: 40px 32px;
+  box-sizing: border-box;
+}
+
+.edit-page-title {
+  font-size: 36px;
+  font-weight: 800;
+  color: #2c1a0e;
+  margin-bottom: 32px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  text-align: center;
+}
+
+.edit-status {
+  text-align: center;
+  padding: 40px;
+  font-size: 18px;
+  color: #5a3e2b;
+}
+
+.edit-list {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  max-width: 760px;
+  margin: 0 auto;
+}
+
+.edit-card {
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 2px 12px rgba(44, 26, 14, 0.08);
+  display: flex;
+  gap: 24px;
+  padding: 24px;
+  align-items: flex-start;
+}
+
+.edit-card-img-wrapper {
+  position: relative;
+  flex-shrink: 0;
+}
+
+.edit-card-img {
+  width: 120px;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 12px;
+  display: block;
+}
+
+.delete-btn {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  border: none;
+  background: #c8522a;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.1s;
+  padding: 0;
+}
+
+.delete-btn:hover {
+  background: #a03a1a;
+  transform: scale(1.1);
+}
+
+.delete-btn:disabled {
+  background: #a0856a;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.edit-card-fields {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  flex: 1;
+}
+
+.edit-field {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.edit-field-row {
+  display: flex;
+  gap: 16px;
+}
+
+.edit-field-row .edit-field {
+  flex: 1;
+}
+
+.edit-field label {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: #5a3e2b;
+}
+
+.edit-field input,
+.edit-field textarea,
+.edit-field select {
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: 2px solid #ede3d8;
+  background: #faf6f1;
+  font-size: 14px;
+  color: #2c1a0e;
+  outline: none;
+  transition: border-color 0.2s;
+  font-family: inherit;
+  resize: none;
+}
+
+.edit-field input:focus,
+.edit-field textarea:focus,
+.edit-field select:focus {
+  border-color: #c8522a;
+}
+
+.save-btn {
+  padding: 12px;
+  border-radius: 999px;
+  border: none;
+  background: #3b1f0e;
+  color: #f5efe6;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background 0.2s;
+  align-self: flex-start;
+}
+
+.save-btn:hover {
+  background: #c8522a;
+}
+
+.save-btn:disabled {
+  background: #a0856a;
+  cursor: not-allowed;
+}
+
+.edit-success {
+  color: #2e7d32;
+  font-weight: 700;
+  font-size: 13px;
+  background: #e8f5e9;
+  padding: 8px 12px;
+  border-radius: 8px;
+  margin: 0;
+}
+
+.edit-error {
+  color: #c8522a;
+  font-weight: 700;
+  font-size: 13px;
+  background: #fdecea;
+  padding: 8px 12px;
+  border-radius: 8px;
+  margin: 0;
+}
