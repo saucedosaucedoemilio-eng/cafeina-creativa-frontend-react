@@ -9,10 +9,19 @@ function EditCafeCard({ cafe, onDelete }) {
     rating: cafe.rating,
     category: cafe.category,
   });
+  const [imageBase64, setImageBase64] = useState(null);
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState(null);
   const [saving, setSaving] = useState(false);
   const [deleting, setDeleting] = useState(false);
+
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onloadend = () => setImageBase64(reader.result);
+    reader.readAsDataURL(file);
+  };
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -42,6 +51,7 @@ function EditCafeCard({ cafe, onDelete }) {
       price: Number(formData.price),
       rating: Number(formData.rating),
       category: formData.category,
+      "cafe-image": imageBase64 || cafe["cafe-image"],
     };
 
     axios
@@ -61,7 +71,11 @@ function EditCafeCard({ cafe, onDelete }) {
   return (
     <div className="edit-card">
       <div className="edit-card-img-wrapper">
-        <img src={cafe["cafe-image"]} alt={cafe.title} className="edit-card-img" />
+        <img
+          src={imageBase64 || cafe["cafe-image"]}
+          alt={cafe.title}
+          className="edit-card-img"
+        />
         <button
           className="delete-btn"
           onClick={handleDelete}
@@ -127,6 +141,16 @@ function EditCafeCard({ cafe, onDelete }) {
               max="5"
             />
           </div>
+        </div>
+
+        <div className="edit-field">
+          <label>Imagen</label>
+          <input
+            type="file"
+            accept="image/*"
+            onChange={handleImageChange}
+            className="edit-file-input"
+          />
         </div>
 
         <div className="edit-field">

@@ -133,6 +133,18 @@
   border-color: #c8522a;
 }
 
+.edit-file-input {
+  padding: 8px 12px;
+  border-radius: 10px;
+  border: 2px dashed #c8522a;
+  background: #faf6f1;
+  color: #5a3e2b;
+  font-size: 13px;
+  cursor: pointer;
+  width: 100%;
+  box-sizing: border-box;
+}
+
 .save-btn {
   padding: 12px;
   border-radius: 999px;
