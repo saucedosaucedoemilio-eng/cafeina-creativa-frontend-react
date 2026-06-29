@@ -15,7 +15,7 @@ function Menu() {
   // Al montar el componente, pide los cafés a la API
   useEffect(() => {
     axios
-      .get("https://cafe-api-backend.onrender.com/cafes")
+      .get("http://localhost:5005/cafes")
       .then((response) => {
         setCafes(response.data); // Guarda los cafés en el estado
         setLoading(false);       // Ya no está cargando
@@ -60,7 +60,14 @@ function Menu() {
               {cafe.rating} <span className="star">★</span>
             </div>
             {/* Imagen del café (viene como URL desde la API) */}
-            <img src={cafe["cafe-image"]} alt={cafe.title} />
+            <img
+              src={cafe["cafe-image"]}
+              alt={cafe.title}
+              onError={(e) => {
+                e.target.onerror = null;
+                e.target.src = "https://placehold.co/300x260/f5efe6/c8522a?text=☕";
+              }}
+            />
             <p className="cafe-card-title">{cafe.title}</p>
             <div className="cafe-card-footer">
               <span className="cafe-card-price">${cafe.price.toFixed(2)}</span>
