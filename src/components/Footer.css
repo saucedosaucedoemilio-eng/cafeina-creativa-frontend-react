@@ -158,3 +158,50 @@
   color: rgba(245, 239, 230, 0.4);
   text-align: center;
 }
+
+/* ── Responsive ── */
+@media (max-width: 768px) {
+  .marquee-item {
+    font-size: 15px;
+    padding: 0 16px;
+    gap: 14px;
+  }
+
+  .footer-main {
+    padding: 40px 24px 24px;
+  }
+
+  .footer-top {
+    flex-direction: column;
+    gap: 16px;
+    margin-bottom: 32px;
+  }
+
+  .footer-tagline {
+    text-align: left;
+  }
+
+  .footer-bottom {
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+  }
+
+  .footer-social {
+    align-items: flex-start;
+  }
+}
+
+@media (max-width: 480px) {
+  .footer-bottom {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+
+  .footer-social {
+    align-items: flex-start;
+  }
+
+  .footer-contact {
+    text-align: left;
+  }
+}

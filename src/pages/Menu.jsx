@@ -1,83 +1,134 @@
-import { useState, useEffect } from "react";
-import axios from "axios";
-import "./Menu.css";
+// useState guarda datos que cambian
+// useEffect ejecuta código cuando el componente se monta (carga)
+import { useState, useEffect } from "react"
+import axios from "axios"
+import "./Menu.css"
 
 function Menu() {
+
   // Lista de cafés que llegan de la API
-  const [cafes, setCafes] = useState([]);
-  // Controla si los datos están cargando
-  const [loading, setLoading] = useState(true);
+  const [cafes, setCafes] = useState([])
+
+  // true mientras esperamos la respuesta de la API
+  const [loading, setLoading] = useState(true)
+
   // Guarda el mensaje de error si algo falla
-  const [error, setError] = useState(null);
-  // Categoría seleccionada en los filtros ("All" por defecto)
-  const [activeCategory, setActiveCategory] = useState("All");
+  const [error, setError] = useState(null)
 
-  // Al montar el componente, pide los cafés a la API
-  useEffect(() => {
-    axios
-      .get("https://cafe-api-backend.onrender.com/cafes")
-      .then((response) => {
-        setCafes(response.data); // Guarda los cafés en el estado
-        setLoading(false);       // Ya no está cargando
+  // Categoría seleccionada para filtrar ("All" muestra todos)
+  const [categoriaActiva, setCategoriaActiva] = useState("All")
+
+  // useEffect se ejecuta una sola vez cuando la página carga
+  useEffect(function() {
+    // Pedimos todos los cafés a la API
+    axios.get("https://cafe-api-backend.onrender.com/cafes")
+      .then(function(response) {
+        // Guardamos los cafés en el estado
+        setCafes(response.data)
+        // Indicamos que ya terminó de cargar
+        setLoading(false)
       })
-      .catch(() => {
-        setError("Error al cargar los cafés"); // Muestra error si falla
-        setLoading(false);
-      });
-  }, []); // El array vacío hace que esto solo se ejecute una vez
+      .catch(function() {
+        // Si hay error, guardamos el mensaje
+        setError("Error al cargar los cafés")
+        setLoading(false)
+      })
+  }, []) // El array vacío [] significa que solo se ejecuta una vez
 
-  // Muestra un mensaje mientras se cargan los datos
-  if (loading) return <p>Cargando cafés...</p>;
-  // Muestra el error si ocurrió uno
-  if (error) return <p>{error}</p>;
+  // Mientras carga mostramos este mensaje
+  if (loading) return <p>Cargando cafés...</p>
 
-  // Por defecto muestra todos los cafés
-  let filteredCafes = cafes;
+  // Si hubo error mostramos el mensaje de error
+  if (error) return <p>{error}</p>
 
-  // Si hay una categoría activa (no "All"), filtra por esa categoría
-  if (activeCategory !== "All") {
-    filteredCafes = cafes.filter((cafe) => cafe.category === activeCategory);
+  // Por defecto mostramos todos los cafés
+  let cafesParaMostrar = cafes
+
+  // Si hay una categoría seleccionada, filtramos los cafés
+  if (categoriaActiva !== "All") {
+    cafesParaMostrar = cafes.filter(function(cafe) {
+      return cafe.category === categoriaActiva
+    })
   }
 
   return (
     <div className="menu-page">
-      {/* Botones de filtro por categoría */}
+
+      {/* Botones para filtrar por categoría */}
       <div className="menu-filters">
-        {/* Cada botón recibe la clase "active" si su categoría está seleccionada */}
-        <button className={`filter-btn ${activeCategory === "All" ? "active" : ""}`} onClick={() => setActiveCategory("All")}>All</button>
-        <button className={`filter-btn ${activeCategory === "Cold Brew" ? "active" : ""}`} onClick={() => setActiveCategory("Cold Brew")}>Cold Brew</button>
-        <button className={`filter-btn ${activeCategory === "Frappuccino" ? "active" : ""}`} onClick={() => setActiveCategory("Frappuccino")}>Frappuccino</button>
-        <button className={`filter-btn ${activeCategory === "Espresso" ? "active" : ""}`} onClick={() => setActiveCategory("Espresso")}>Espresso</button>
-        <button className={`filter-btn ${activeCategory === "Té Frío" ? "active" : ""}`} onClick={() => setActiveCategory("Té Frío")}>Té Frío</button>
+        {/* Cada botón cambia la categoría activa al hacer click */}
+        <button
+          className={"filter-btn " + (categoriaActiva === "All" ? "active" : "")}
+          onClick={function() { setCategoriaActiva("All") }}
+        >
+          All
+        </button>
+        <button
+          className={"filter-btn " + (categoriaActiva === "Cold Brew" ? "active" : "")}
+          onClick={function() { setCategoriaActiva("Cold Brew") }}
+        >
+          Cold Brew
+        </button>
+        <button
+          className={"filter-btn " + (categoriaActiva === "Frappuccino" ? "active" : "")}
+          onClick={function() { setCategoriaActiva("Frappuccino") }}
+        >
+          Frappuccino
+        </button>
+        <button
+          className={"filter-btn " + (categoriaActiva === "Espresso" ? "active" : "")}
+          onClick={function() { setCategoriaActiva("Espresso") }}
+        >
+          Espresso
+        </button>
+        <button
+          className={"filter-btn " + (categoriaActiva === "Té Frío" ? "active" : "")}
+          onClick={function() { setCategoriaActiva("Té Frío") }}
+        >
+          Té Frío
+        </button>
       </div>
 
-      {/* Grid de tarjetas — recorre los cafés filtrados y renderiza uno por cada café */}
+      {/* Grid de tarjetas de cafés */}
       <div className="cafes-grid">
-        {filteredCafes.map((cafe) => (
-          <div key={cafe.id} className="cafe-card">
-            {/* Rating con estrella */}
-            <div className="cafe-card-rating">
-              {cafe.rating} <span className="star">★</span>
+        {/* Recorremos el array de cafés y pintamos una tarjeta por cada uno */}
+        {cafesParaMostrar.map(function(cafe) {
+          return (
+            <div key={cafe.id} className="cafe-card">
+
+              {/* Rating con estrella en la esquina superior derecha */}
+              <div className="cafe-card-rating">
+                {cafe.rating} <span className="star">★</span>
+              </div>
+
+              {/* Imagen del café */}
+              <img
+                src={cafe["cafe-image"]}
+                alt={cafe.title}
+                onError={function(e) {
+                  // Si la imagen falla, mostramos un placeholder
+                  e.target.onerror = null
+                  e.target.src = "https://placehold.co/300x260/f5efe6/c8522a?text=☕"
+                }}
+              />
+
+              {/* Nombre del café */}
+              <p className="cafe-card-title">{cafe.title}</p>
+
+              {/* Pie de la tarjeta: precio y botón */}
+              <div className="cafe-card-footer">
+                {/* toFixed(2) muestra siempre 2 decimales */}
+                <span className="cafe-card-price">${cafe.price.toFixed(2)}</span>
+                <span className="cafe-card-cta">Get this brew →</span>
+              </div>
+
             </div>
-            {/* Imagen del café (viene como URL desde la API) */}
-            <img
-              src={cafe["cafe-image"]}
-              alt={cafe.title}
-              onError={(e) => {
-                e.target.onerror = null;
-                e.target.src = "https://placehold.co/300x260/f5efe6/c8522a?text=☕";
-              }}
-            />
-            <p className="cafe-card-title">{cafe.title}</p>
-            <div className="cafe-card-footer">
-              <span className="cafe-card-price">${cafe.price.toFixed(2)}</span>
-              <span className="cafe-card-cta">Get this brew →</span>
-            </div>
-          </div>
-        ))}
+          )
+        })}
       </div>
+
     </div>
-  );
+  )
 }
 
-export default Menu;
+export default Menu

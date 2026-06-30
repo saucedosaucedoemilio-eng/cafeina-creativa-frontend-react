@@ -50,8 +50,26 @@
 }
 
 @media (max-width: 600px) {
+  .menu-page {
+    padding: 24px 16px;
+  }
+
   .cafes-grid {
     grid-template-columns: 1fr;
+  }
+
+  .cafe-card img {
+    height: 200px;
+  }
+
+  .menu-filters {
+    gap: 8px;
+    margin-bottom: 24px;
+  }
+
+  .filter-btn {
+    padding: 8px 14px;
+    font-size: 11px;
   }
 }
 

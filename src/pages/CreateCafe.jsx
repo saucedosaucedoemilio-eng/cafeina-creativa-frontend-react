@@ -1,113 +1,114 @@
-import { useState } from "react";
-import axios from "axios";
-import "./CreateCafe.css";
+import { useState } from "react"
+import axios from "axios"
+import "./CreateCafe.css"
 
 function CreateCafe() {
-  // Estado del formulario — guarda lo que el usuario escribe en cada campo
-  const [formData, setFormData] = useState({
-    title: "",
-    description: "",
-    price: "",
-    rating: "",
-    category: "Cold Brew", // Categoría por defecto
-  });
 
-  // Guarda la imagen convertida a base64 para poder enviarla como texto
-  const [imageBase64, setImageBase64] = useState(null);
-  // true cuando el café se creó correctamente
-  const [success, setSuccess] = useState(false);
-  // Guarda el mensaje de error si algo falla
-  const [error, setError] = useState(null);
+  // Un estado por cada campo del formulario
+  const [title, setTitle] = useState("")
+  const [description, setDescription] = useState("")
+  const [price, setPrice] = useState("")
+  const [rating, setRating] = useState("")
+  const [category, setCategory] = useState("Cold Brew")
 
-  // Actualiza el campo correspondiente del formulario cuando el usuario escribe
-  const handleChange = (e) => {
-    // [e.target.name] usa el atributo "name" del input como clave dinámica
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
+  // Guardamos la imagen convertida a base64
+  const [imageBase64, setImageBase64] = useState(null)
 
-  // Convierte la imagen seleccionada a base64 para poder enviarla a la API
-  const handleImageChange = (e) => {
-    const file = e.target.files[0];
-    if (!file) return; // Si no eligió archivo, no hace nada
+  // Estado para mostrar mensaje de éxito
+  const [success, setSuccess] = useState(false)
 
-    const reader = new FileReader();
-    // Cuando termina de leer, guarda el resultado en el estado
-    reader.onloadend = () => {
-      setImageBase64(reader.result); // reader.result es la imagen en base64
-    };
-    reader.readAsDataURL(file); // Inicia la lectura como URL de datos
-  };
+  // Estado para mostrar errores
+  const [error, setError] = useState(null)
 
-  // Se ejecuta al enviar el formulario
-  const handleSubmit = (e) => {
-    e.preventDefault(); // Evita que la página se recargue al hacer submit
+  // Función que convierte la imagen a base64 cuando el usuario la selecciona
+  function handleImageChange(e) {
+    const file = e.target.files[0]
+    if (!file) return
 
-    // Arma el objeto con los datos del nuevo café
-    const newCafe = {
-      title: formData.title,
-      description: formData.description,
-      price: Number(formData.price),   // Convierte string a número
-      rating: Number(formData.rating), // Convierte string a número
-      category: formData.category,
-      "cafe-image": imageBase64,       // Imagen en base64
+    // FileReader convierte el archivo a texto base64
+    const reader = new FileReader()
+    reader.onloadend = function() {
+      // reader.result es el string base64 de la imagen
+      setImageBase64(reader.result)
+    }
+    reader.readAsDataURL(file)
+  }
+
+  // Función que se ejecuta al enviar el formulario
+  function handleSubmit(e) {
+    // Evitamos que la página se recargue
+    e.preventDefault()
+
+    // Construimos el objeto con los datos del nuevo café
+    const nuevoCafe = {
+      title: title,
+      description: description,
+      price: Number(price),     // Convertimos el string a número
+      rating: Number(rating),   // Convertimos el string a número
+      category: category,
+      "cafe-image": imageBase64, // La imagen en formato base64
       userId: 1,
-    };
+    }
 
-    // Envía el nuevo café a la API con un POST
-    axios
-      .post("https://cafe-api-backend.onrender.com/cafes", newCafe)
-      .then(() => {
-        setSuccess(true);  // Muestra mensaje de éxito
-        setError(null);
-        // Limpia el formulario para poder crear otro café
-        setFormData({ title: "", description: "", price: "", rating: "", category: "Cold Brew" });
-        setImageBase64(null);
+    // Enviamos el nuevo café a la API con POST
+    axios.post("https://cafe-api-backend.onrender.com/cafes", nuevoCafe)
+      .then(function() {
+        // Si fue bien, mostramos éxito y limpiamos el formulario
+        setSuccess(true)
+        setError(null)
+        setTitle("")
+        setDescription("")
+        setPrice("")
+        setRating("")
+        setCategory("Cold Brew")
+        setImageBase64(null)
       })
-      .catch(() => {
-        setError("Error al crear el café. Inténtalo de nuevo."); // Muestra error
-        setSuccess(false);
-      });
-  };
+      .catch(function() {
+        // Si hubo error, lo mostramos
+        setError("Error al crear el café. Inténtalo de nuevo.")
+        setSuccess(false)
+      })
+  }
 
   return (
     <div className="create-page">
       <h1 className="create-title">Crear nuevo café</h1>
 
-      {/* onSubmit llama a handleSubmit cuando el usuario presiona el botón */}
+      {/* Formulario para crear un café */}
       <form className="create-form" onSubmit={handleSubmit}>
+
+        {/* Campo: nombre del café */}
         <div className="form-group">
           <label>Nombre del café</label>
           <input
             type="text"
-            name="title"
-            value={formData.title}
-            onChange={handleChange}
+            value={title}
+            onChange={function(e) { setTitle(e.target.value) }}
             placeholder="Ej: Frosted Velvet"
             required
           />
         </div>
 
+        {/* Campo: descripción */}
         <div className="form-group">
           <label>Descripción</label>
           <textarea
-            name="description"
-            value={formData.description}
-            onChange={handleChange}
+            value={description}
+            onChange={function(e) { setDescription(e.target.value) }}
             placeholder="Describe el café..."
             rows={4}
             required
           />
         </div>
 
-        {/* Fila con dos campos lado a lado */}
+        {/* Fila con precio y rating uno al lado del otro */}
         <div className="form-row">
           <div className="form-group">
             <label>Precio (€)</label>
             <input
               type="number"
-              name="price"
-              value={formData.price}
-              onChange={handleChange}
+              value={price}
+              onChange={function(e) { setPrice(e.target.value) }}
               placeholder="Ej: 4.50"
               step="0.01"
               min="0"
@@ -119,9 +120,8 @@ function CreateCafe() {
             <label>Rating</label>
             <input
               type="number"
-              name="rating"
-              value={formData.rating}
-              onChange={handleChange}
+              value={rating}
+              onChange={function(e) { setRating(e.target.value) }}
               placeholder="Ej: 4.8"
               step="0.1"
               min="0"
@@ -131,10 +131,13 @@ function CreateCafe() {
           </div>
         </div>
 
+        {/* Campo: categoría (desplegable) */}
         <div className="form-group">
           <label>Categoría</label>
-          {/* Desplegable para elegir categoría */}
-          <select name="category" value={formData.category} onChange={handleChange}>
+          <select
+            value={category}
+            onChange={function(e) { setCategory(e.target.value) }}
+          >
             <option value="Cold Brew">Cold Brew</option>
             <option value="Frappuccino">Frappuccino</option>
             <option value="Espresso">Espresso</option>
@@ -142,9 +145,9 @@ function CreateCafe() {
           </select>
         </div>
 
+        {/* Campo: imagen (se convierte a base64) */}
         <div className="form-group">
           <label>Imagen del café</label>
-          {/* Input de archivo — solo acepta imágenes */}
           <input
             type="file"
             accept="image/*"
@@ -152,20 +155,21 @@ function CreateCafe() {
             className="file-input"
             required
           />
-          {/* Muestra la preview solo si ya se eligió una imagen */}
+          {/* Preview de la imagen seleccionada */}
           {imageBase64 && (
             <img src={imageBase64} alt="Preview" className="image-preview" />
           )}
         </div>
 
-        {/* Mensajes de éxito o error tras enviar */}
+        {/* Mensajes de éxito o error */}
         {success && <p className="form-success">¡Café creado con éxito!</p>}
         {error && <p className="form-error">{error}</p>}
 
         <button type="submit" className="submit-btn">Crear café</button>
+
       </form>
     </div>
-  );
+  )
 }
 
-export default CreateCafe;
+export default CreateCafe

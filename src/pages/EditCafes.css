@@ -188,3 +188,41 @@
   border-radius: 8px;
   margin: 0;
 }
+
+/* ── Responsive ── */
+@media (max-width: 600px) {
+  .edit-page {
+    padding: 24px 16px;
+  }
+
+  .edit-page-title {
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+
+  .edit-card {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .edit-card-img-wrapper {
+    width: 100%;
+  }
+
+  .edit-card-img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 12px;
+  }
+
+  .edit-field-row {
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  .save-btn {
+    width: 100%;
+    text-align: center;
+  }
+}
